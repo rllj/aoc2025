@@ -8,21 +8,18 @@ int main() {
   char type;
   int32_t amount;
   while (std::cin >> type >> amount) {
+    cnt += type == 'R' ? amount : -amount;
+    int32_t full_turns = cnt / 100;
     if (type == 'L') {
-      cnt -= amount;
-      if (cnt == 0) {
-        result++;
-      } else if (cnt < 0) {
-        int32_t inc = cnt / 100;
-        result = result - inc + (cnt + amount != 0);
-        int32_t rem = cnt - inc * 100;
+      result += cnt == 0;
+      if (cnt < 0) {
+        result = result - full_turns + (cnt + amount != 0);
+        int32_t rem = cnt - full_turns * 100;
         cnt = rem >= 0 ? rem : rem + 100;
       }
     } else {
-      cnt += amount;
-      int32_t inc = cnt / 100;
-      result += inc;
-      cnt -= 100 * inc;
+      result += full_turns;
+      cnt -= 100 * full_turns;
     }
   }
 
