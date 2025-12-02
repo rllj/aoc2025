@@ -21,9 +21,9 @@ pub fn main() void {
             var buf: [16]u8 = undefined;
             const num_string = std.fmt.bufPrint(&buf, "{d}", .{num}) catch unreachable;
 
+            if (num_string.len == 1) continue;
             if (std.mem.allEqual(u8, num_string, num_string[0])) {
                 result += num;
-                std.debug.print("{s}\n", .{num_string});
                 continue;
             }
             const is_repeating = switch (num_string.len) {
@@ -51,7 +51,6 @@ pub fn main() void {
             };
 
             if (is_repeating) {
-                std.debug.print("{s}\n", .{num_string});
                 result += num;
             }
         }
