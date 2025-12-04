@@ -8,16 +8,20 @@ const Position = struct {
 };
 
 pub fn main() void {
-    var timer = std.time.Timer.start() catch unreachable;
+    const memory = std.heap.page_allocator.alloc(u8, 64 * 1024) catch unreachable;
+    defer std.heap.page_allocator.free(memory);
+    var fba: std.heap.FixedBufferAllocator = .init(memory);
+    const allocator = fba.allocator();
 
-    var rows = std.ArrayList([]u8).initCapacity(std.heap.page_allocator, 256) catch unreachable;
+    var rows = std.ArrayList([]u8).initCapacity(allocator, 256) catch unreachable;
     var row_iterator = std.mem.tokenizeScalar(u8, input, '\n');
 
     while (row_iterator.next()) |row| {
-        const duped = std.heap.page_allocator.dupe(u8, row) catch unreachable;
+        const duped = allocator.dupe(u8, row) catch unreachable;
         rows.appendAssumeCapacity(duped);
     }
 
+    var timer = std.time.Timer.start() catch unreachable;
     var stack: [16 * 1024]Position = undefined;
     var stack_len: usize = 0;
 
