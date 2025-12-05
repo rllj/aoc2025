@@ -1,18 +1,3 @@
-let merge fst_range snd_range =
-  if fst snd_range >= fst fst_range && fst snd_range <= snd fst_range then
-    ((fst fst_range, max (snd fst_range) (snd snd_range)), None)
-  else (fst_range, Some snd_range)
-in
-
-let rec merge_ranges = function
-  | [] -> []
-  | [ x ] -> [ x ]
-  | f :: s :: t -> (
-      match merge f s with
-      | x, None -> merge_ranges (x :: t)
-      | x, Some y -> x :: merge_ranges (y :: t))
-in
-
 let input = Array.to_list (Arg.read_arg "input.txt") in
 
 let ranges, ids =
@@ -26,8 +11,15 @@ let merged_ranges =
          match String.split_on_char '-' s with
          | f :: s :: _ -> Some (int_of_string f, int_of_string s)
          | _ -> None)
-  |> List.sort (fun lhs rhs -> fst lhs - fst rhs)
-  |> merge_ranges
+  |> List.sort (fun (lo1, _) (lo2, _) -> compare lo1 lo2)
+  |> List.fold_left
+       (fun acc (lo, hi) ->
+         match acc with
+         | [] -> [ (lo, hi) ]
+         | (last_lo, last_hi) :: rest ->
+             if lo <= last_hi then (last_lo, max last_hi hi) :: rest
+             else (lo, hi) :: acc)
+       []
 in
 
 (* Part one *)
