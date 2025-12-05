@@ -32,7 +32,6 @@ pub fn main() void {
                 num_string[0 .. num_string_len / 2],
                 num_string[num_string_len / 2 ..],
             )) {
-                std.debug.print("{d}\n", .{num});
                 result += num;
             }
         }

@@ -9,8 +9,6 @@ pub fn main() void {
     var result: u64 = 0;
 
     while (ranges.next()) |range| {
-        std.debug.print("{s}\n", .{range});
-
         var largest: u64 = 0;
         var largest_idx: usize = 0;
         for (range, 0..) |item, i| {
@@ -27,7 +25,6 @@ pub fn main() void {
                     second = item;
                 }
             }
-            std.debug.print("{d}{d}\n", .{ (second - '0'), (largest - '0') });
             result += (second - '0') * 10 + (largest - '0');
         } else {
             for (range[largest_idx + 1 ..]) |item| {
@@ -35,7 +32,6 @@ pub fn main() void {
                     second = item;
                 }
             }
-            std.debug.print("{d}{d}\n", .{ (largest - '0'), (second - '0') });
             result += (largest - '0') * 10 + (second - '0');
         }
     }
