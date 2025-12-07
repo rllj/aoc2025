@@ -11,5 +11,4 @@ let result, _ =
       if next = 0 then (result + 1, next) else (result, next))
     (0, 50) input
 in
-print_int result;
-print_endline ""
+Printf.printf "Part one: %d\n" result

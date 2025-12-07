@@ -22,13 +22,11 @@ let merged_ranges =
        []
 in
 
-(* Part one *)
 ids |> List.map int_of_string
 |> List.filter_map (fun id ->
        List.find_opt (fun r -> fst r <= id && snd r >= id) merged_ranges)
-|> List.length |> string_of_int |> print_endline;
+|> List.length |> Printf.printf "Part one: %d\n";
 
-(* Part two *)
 merged_ranges
 |> List.fold_left (fun acc (lo, hi) -> acc + hi - lo + 1) 0
-|> string_of_int |> print_endline
+|> Printf.printf "Part two: %d\n";
