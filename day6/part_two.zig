@@ -9,7 +9,7 @@ pub const OpOrNumber = union(enum) {
 
 pub fn main() void {
     const first_line_end = std.mem.findScalar(u8, input, '\n') orelse unreachable;
-    const mem = std.heap.page_allocator.alloc(OpOrNumber, first_line_end) catch unreachable;
+    const mem = std.heap.page_allocator.alloc(OpOrNumber, first_line_end * 2) catch unreachable;
 
     var timer = std.time.Timer.start() catch unreachable;
 
