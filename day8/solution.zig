@@ -64,10 +64,8 @@ pub fn main() void {
 
     std.mem.sort(Pair, pairs.items, {}, cmp_pairs);
 
-    const first_thousand_connected = pairs.items;
-
     var last_merged: struct { idx1: usize, idx2: usize } = undefined;
-    for (first_thousand_connected, 0..) |pair, i| {
+    for (pairs.items, 0..) |pair, i| {
         if (i + 1 == 1000) {
             const counts: []usize = allocator.alloc(usize, line_count) catch unreachable;
             defer allocator.free(counts);
