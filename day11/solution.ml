@@ -53,5 +53,5 @@ let find_paths_pt2 start goal =
   find_paths_rec start goal false false
 in
 
-(* Printf.printf "Part one: %d\n" (find_paths "you" "out") *)
+Printf.printf "Part one: %d\n" (find_paths "you" "out")
 Printf.printf "Part two: %d\n" (find_paths_pt2 "svr" "out")
